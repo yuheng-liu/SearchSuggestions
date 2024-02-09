@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SearchSuggestions</string>
+    <string name="go_to_search_suggestions_page">Go to Search Suggestions Page</string>
+</resources>
