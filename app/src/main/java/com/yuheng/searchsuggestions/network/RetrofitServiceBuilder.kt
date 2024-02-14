@@ -3,7 +3,7 @@ package com.yuheng.searchsuggestions.network
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val DUCK_DUCK_GO_BASE_URL = "https://duckduckgo.com/"
 object RetrofitServiceBuilder {
@@ -18,6 +18,6 @@ object RetrofitServiceBuilder {
         Retrofit.Builder()
             .client(client)
             .baseUrl(DUCK_DUCK_GO_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
 }
