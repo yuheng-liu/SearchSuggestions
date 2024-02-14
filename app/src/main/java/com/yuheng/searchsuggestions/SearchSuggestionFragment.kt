@@ -1,21 +1,18 @@
 package com.yuheng.searchsuggestions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.SearchView
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yuheng.searchsuggestions.databinding.FragmentSearchSuggestionsBinding
 import com.yuheng.searchsuggestions.network.DuckDuckGoApiService
 import com.yuheng.searchsuggestions.network.RetrofitServiceBuilder
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SearchSuggestionFragment : Fragment() {
@@ -44,7 +41,9 @@ class SearchSuggestionFragment : Fragment() {
             { suggestionText -> onSuggestionItemPressed(suggestionText) },
             { suggestionText -> onChooseSuggestionPressed(suggestionText) }
         )
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.addItemDecoration((DividerItemDecoration(requireContext(), layoutManager.orientation)))
         binding.recyclerView.adapter = suggestionsAdapter
     }
 
@@ -57,7 +56,9 @@ class SearchSuggestionFragment : Fragment() {
     private fun setupListeners() {
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
+                (activity as MainActivity).searchInBrowser(query ?: "")
+                SearchSuggestionsRepo.clearSearchSuggestions()
+                findNavController().popBackStack()
                 return true
             }
 
@@ -72,13 +73,14 @@ class SearchSuggestionFragment : Fragment() {
                 return true
             }
         })
+        binding.searchIcon.setOnClickListener { findNavController().popBackStack() }
     }
 
     private fun onSuggestionItemPressed(text: String) {
-
+        binding.searchBar.setQuery(text, true)
     }
 
     private fun onChooseSuggestionPressed(text: String) {
-
+        binding.searchBar.setQuery(text, false)
     }
 }

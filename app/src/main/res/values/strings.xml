@@ -2,5 +2,5 @@
     <string name="app_name">SearchSuggestions</string>
     <string name="go_to_search_suggestions_page">Go to Search Suggestions Page</string>
     <string name="search_button">Search Button</string>
-    <string name="search_here">Search Here ...</string>
+    <string name="search_here">Search Here …</string>
 </resources>

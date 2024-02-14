@@ -14,4 +14,6 @@ object SearchSuggestionsRepo {
     fun getSearchSuggestions() = searchSuggestionsFlow.asSharedFlow().asLiveData(timeoutInMs = 0L)
 
     fun updateSearchSuggestions(searchSuggestions: List<String>) = searchSuggestionsFlow.tryEmit(searchSuggestions)
+
+    fun clearSearchSuggestions() = searchSuggestionsFlow.tryEmit(emptyList())
 }

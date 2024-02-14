@@ -1,7 +1,11 @@
 package com.yuheng.searchsuggestions
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +39,16 @@ class MainActivity : AppCompatActivity() {
                 View.GONE
             else
                 View.VISIBLE
+        }
+    }
+
+    fun searchInBrowser(query: String) {
+        val webPage: Uri = Uri.parse("https://www.google.com/search?q=${query}")
+        val intent = Intent(Intent.ACTION_VIEW, webPage)
+        try {
+            startActivity(intent)
+        } catch (ex: ActivityNotFoundException) {
+            Log.d("myDebug", "Activity not found")
         }
     }
 }
